@@ -3,24 +3,24 @@ services:
   healthy-spring-boot-logging:
     build:
       context: .
-      dockerfile: healthy-spring-boot-logging-Dockerfile
+      dockerfile: docker/healthy-spring-boot-logging/Dockerfile
     ports:
       - 8080:8080
   unhealthy-spring-boot-logging:
     build:
       context: .
-      dockerfile: unhealthy-spring-boot-logging-Dockerfile
+      dockerfile: docker/unhealthy-spring-boot-logging/Dockerfile
     ports:
       - 8079:8080
   prometheus:
     build:
       context: .
-      dockerfile: prometheus-Dockerfile
+      dockerfile: docker/prometheus/Dockerfile
     ports:
       - 9090:9090
   grafana:
-    build:
-      context: .
-      dockerfile: grafana-Dockerfile
+    image: grafana/grafana:6.3.5
     ports:
       - 3000:3000
+    volumes:
+      - ./docker/grafana:/etc/grafana
