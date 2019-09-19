@@ -12,12 +12,9 @@ import java.time.Duration;
 
 import static java.lang.Thread.currentThread;
 import static java.lang.Thread.sleep;
-import static java.util.concurrent.TimeUnit.MILLISECONDS;
-import static java.util.concurrent.TimeUnit.SECONDS;
 
 public class SimulationResponseFilter
-        extends OncePerRequestFilter
-        implements TraceMixin {
+        extends OncePerRequestFilter {
     private final Duration delay;
     private final Logger logger;
 
@@ -36,9 +33,11 @@ public class SimulationResponseFilter
                 delay, request.getRequestURL());
 
         try {
-            sleep(MILLISECONDS.convert(delay.getSeconds(), SECONDS),
-                    delay.getNano());
+            // Duration is in seconds + leftover nanos of a second
+            // Sleep is in millis + leftover nanos of a milli
+            sleep(delay.getSeconds() * 1_000, delay.getNano() % 1_000_000);
         } catch (final InterruptedException e) {
+            logger.error("Interrupted while sleeping in simulation");
             currentThread().interrupt();
         }
 
