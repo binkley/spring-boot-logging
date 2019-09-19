@@ -1,5 +1,6 @@
-version: '3'
+version: "3.7"
 services:
+  # Spring Boot applications
   healthy-spring-boot-logging:
     build:
       context: .
@@ -12,22 +13,61 @@ services:
       dockerfile: docker/unhealthy-spring-boot-logging/Dockerfile
     ports:
       - 8079:8080
+
+  # Logging
+  elasticsearch:
+    image: docker.elastic.co/elasticsearch/elasticsearch:7.3.2
+    ports:
+      - 9200:9200
+      - 9300:9300
+    volumes:
+      - type: bind
+        source: ./docker/elasticsearch/config/elasticsearch.yml
+        target: /usr/share/elasticsearch/config/elasticsearch.yml
+        read_only: true
+  logstash:
+    image: docker.elastic.co/logstash/logstash:7.3.2
+    ports:
+      - 5000:5000
+      - 9600:9600
+    volumes:
+      - type: bind
+        source: ./docker/logstash/config/logstash.yml
+        target: /usr/share/logstash/config/logstash.yml
+        read_only: true
+      - type: bind
+        source: ./docker/logstash/pipeline
+        target: /usr/share/logstash/pipeline
+        read_only: true
+    depends_on:
+      - elasticsearch
+  kibana:
+    image: docker.elastic.co/kibana/kibana:7.3.2
+    ports:
+      - 5601:5601
+    volumes:
+      - type: bind
+        source: ./docker/kibana/config/kibana.yml
+        target: /usr/share/kibana/config/kibana.yml
+        read_only: true
+    depends_on:
+      - elasticsearch
+
+  # Metrics
   prometheus:
     image: prom/prometheus:v2.12.0
     ports:
       - 9090:9090
     volumes:
-      - ./docker/prometheus/prometheus.yml:/etc/prometheus/prometheus.yml
+      - type: bind
+        source: ./docker/prometheus/prometheus.yml
+        target: /etc/prometheus/prometheus.yml
+        read_only: true
   grafana:
     image: grafana/grafana:6.3.5
     ports:
       - 3000:3000
     volumes:
       - ./docker/grafana:/etc/grafana
-#  elasticsearch:
-#    image: docker.elastic.co/elasticsearch/elasticsearch:7.3.2
-#    ports:
-#      - 9200:9200
-#      - 9300:9300
-#    environment:
-#      - discovery.type=single-node
+    depends_on:
+      - prometheus

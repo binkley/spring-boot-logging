@@ -40,10 +40,11 @@ Local development:
 * Full-color Spring Boot logging
 * Human-friendly HTTP logging
 * Maven and Gradle
+* Docker Compose for _local_ testing of Prometheus/Grafana and ELK
 
 Production use:
 
-* JSON logging suitable for Logstash with `--json-logging`
+* JSON logging suitable for ELK with `--json-logging`
 * Embedded JSON payloads (not quoted-string JSON)
 * Custom JSON properties (ie, "environment")
 * Micrometer timings on Feign clients and Spring Data repositories
@@ -67,3 +68,7 @@ $ ./docker-compose build
 $ ./docker-compose up
 $ open http://localhost:9090
 ```
+
+## Notes
+
+* [ELK on Docker Compose](https://github.com/deviantony/docker-elk)
