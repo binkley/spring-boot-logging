@@ -13,11 +13,11 @@ services:
     ports:
       - 8079:8080
   prometheus:
-    build:
-      context: .
-      dockerfile: docker/prometheus/Dockerfile
+    image: prom/prometheus:latest
     ports:
       - 9090:9090
+    volumes:
+      - ./docker/prometheus/prometheus.yml:/etc/prometheus/prometheus.yml
   grafana:
     image: grafana/grafana:6.3.5
     ports:
