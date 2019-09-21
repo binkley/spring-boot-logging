@@ -25,6 +25,10 @@ services:
         source: ./docker/elasticsearch/config/elasticsearch.yml
         target: /usr/share/elasticsearch/config/elasticsearch.yml
         read_only: true
+    ulimits:
+      memlock:
+        soft: -1
+        hard: -1
   logstash:
     image: docker.elastic.co/logstash/logstash:7.3.2
     ports:
