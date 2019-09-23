@@ -1,1 +1,22 @@
+pluginManagement {
+    repositories {
+        gradlePluginPortal()
+        mavenCentral()
+        maven { url "https://repo.spring.io/libs-release" }
+        maven {
+            url "https://nexus-tools.swacorp.com/MX/content/groups/public"
+        }
+    }
+
+    plugins {
+        id "com.dorongold.task-tree" version "${taskTreePluginVersion}"
+        id "com.github.ben-manes.versions" version "${versionsPluginVersion}"
+        id "com.github.spotbugs" version "${spotbugsPluginVersion}"
+        id "com.gorylenko.gradle-git-properties" version "${gitPropertiesPluginVersion}"
+        id "io.spring.dependency-management" version "${springDependencyManagementPluginVersion}"
+        id "org.springframework.boot" version "${springBootVersion}"
+        id "se.patrikerdes.use-latest-versions" version "${useLatestVersionsPluginVersion}"
+    }
+}
+
 rootProject.name = "spring-boot-logging"
