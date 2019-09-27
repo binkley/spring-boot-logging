@@ -65,6 +65,7 @@ dependencies {
 
     implementation "org.springframework.boot:spring-boot-starter-web"
     implementation "org.springframework.boot:spring-boot-starter-actuator"
+    implementation "org.springframework.boot:spring-boot-starter-websocket"
     implementation "io.micrometer:micrometer-registry-prometheus"
     implementation "org.springframework.cloud:spring-cloud-starter-sleuth"
     implementation "org.springframework.cloud:spring-cloud-starter-openfeign"
@@ -92,6 +93,11 @@ dependencies {
     runtimeOnly "net.logstash.logback:logstash-logback-encoder:${logstashVersion}"
     runtimeOnly "com.h2database:h2"
     runtimeOnly "org.flywaydb:flyway-core"
+    runtimeOnly "org.webjars:webjars-locator-core"
+    runtimeOnly "org.webjars:sockjs-client:1.0.2"
+    runtimeOnly "org.webjars:stomp-websocket:2.3.3"
+    runtimeOnly "org.webjars:bootstrap:3.3.7"
+    runtimeOnly "org.webjars:jquery:3.1.0"
 }
 
 dependencyManagement {
