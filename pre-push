@@ -1,6 +1,14 @@
 #!/bin/bash
 
+export PS4='+${BASH_SOURCE}:${LINENO}:${FUNCNAME[0]:+${FUNCNAME[0]}():} '
+
+set -e
+set -u
+set -o pipefail
+
 cd "$(git rev-parse --show-toplevel)"
 
+# Require both build systems work
+./mvnw clean package
 # Rerun to ignore cached results of previous runs
 ./gradlew clean build --rerun-tasks
