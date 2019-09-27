@@ -20,6 +20,9 @@
     <description>All thing logging for Spring Boot</description>
 
     <properties>
+        <!--
+swaggerVersion=2.9.2
+        -->
         <!-- @formatter:off -->
         <assertj.version>3.13.2</assertj.version>
         <!-- TODO: Spring Boot 2.1.8 and lower do not work with Flyway 6 -->
@@ -32,6 +35,7 @@
         <junit-jupiter.version>5.5.2</junit-jupiter.version>
         <logbook.version>1.13.0</logbook.version>
         <logstash-logback.version>6.2</logstash-logback.version>
+        <lombok.version>1.18.10</lombok.version>
         <maven-compiler-plugin.version>3.8.1</maven-compiler-plugin.version>
         <!-- TODO: Track when 3.1.2 releases -->
         <maven-dependency-plugin.version>3.1.2-SNAPSHOT</maven-dependency-plugin.version>

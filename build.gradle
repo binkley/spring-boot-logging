@@ -28,6 +28,7 @@ configurations {
         resolutionStrategy {
             if (false) failOnVersionConflict() // TODO: Lots of conflicts
 
+            // TODO: Why are these versions getting lost in Gradle?
             eachDependency { details ->
                 if (details.requested.group == "io.micrometer")
                     details.useVersion "${micrometerVersion}"
@@ -82,7 +83,7 @@ dependencies {
     testImplementation "org.javassist:javassist:${javassistVersion}"
 
     runtimeOnly "net.logstash.logback:logstash-logback-encoder:${logstashVersion}"
-    runtimeOnly "com.h2database:h2:${h2DatabaseVersion}"
+    runtimeOnly "com.h2database:h2"
     runtimeOnly "org.flywaydb:flyway-core"
 }
 
