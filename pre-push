@@ -9,6 +9,8 @@ set -o pipefail
 cd "$(git rev-parse --show-toplevel)"
 
 # Require both build systems work
+echo "Checking Maven build..."
 ./mvnw clean package
+echo "Checking Gradle build..."
 # Rerun to ignore cached results of previous runs
 ./gradlew clean build --rerun-tasks
