@@ -21,6 +21,10 @@ public class WebSocketConfiguration
         implements WebSocketMessageBrokerConfigurer {
     private final StompLogging stompLogging;
 
+    private static boolean addDefaultMessageConverters() {
+        return true;
+    }
+
     @Override
     public void registerStompEndpoints(final StompEndpointRegistry registry) {
         registry.addEndpoint("/websocket").withSockJS();
@@ -35,7 +39,9 @@ public class WebSocketConfiguration
     @Override
     public boolean configureMessageConverters(
             final List<MessageConverter> messageConverters) {
-        return true;
+        messageConverters.add(stompLogging.loggingStompMessageConverter());
+
+        return addDefaultMessageConverters();
     }
 
     @Override
