@@ -59,11 +59,13 @@ public class StompLogging
                 @Nonnull final WebSocketSession session,
                 final WebSocketMessage<?> message)
                 throws Exception {
-            final var uri = session.getUri();
             final var payloadForLogging =
                     stompFrameWithoutEnding((String) message.getPayload());
 
-            logger.debug("{}:\n{}", uri, payloadForLogging);
+            logger.trace("{} -> {}:\n{}",
+                    session.getRemoteAddress(),
+                    session.getUri(),
+                    payloadForLogging);
 
             super.handleMessage(session, message);
         }
