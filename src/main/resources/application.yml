@@ -87,6 +87,10 @@ spring:
       enabled: "ALWAYS"
   resources:
     add-mappings: false  # NB -- not usable with Swagger
+  sleuth:
+    integration:
+      websockets:
+        enabled: true
 
 ---
 
