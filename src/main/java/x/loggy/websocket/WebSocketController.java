@@ -1,4 +1,4 @@
-package x.loggy;
+package x.loggy.websocket;
 
 import lombok.RequiredArgsConstructor;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -8,6 +8,7 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.ResponseStatus;
 import org.springframework.web.bind.annotation.RestController;
+import x.loggy.NewWebSocketMessage;
 
 import javax.validation.Valid;
 
@@ -28,6 +29,6 @@ public class WebSocketController {
             @RequestBody final @Valid NewWebSocketMessage newMessage) {
         messaging.convertAndSend(
                 format("/websocket/new-message/%s", newMessage.getTopic()),
-                newMessage.getMessage());
+                newMessage);
     }
 }

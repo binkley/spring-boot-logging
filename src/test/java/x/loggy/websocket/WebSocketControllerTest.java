@@ -1,4 +1,4 @@
-package x.loggy;
+package x.loggy.websocket;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
 import lombok.RequiredArgsConstructor;
@@ -9,6 +9,7 @@ import org.springframework.boot.test.mock.mockito.MockBean;
 import org.springframework.context.annotation.Import;
 import org.springframework.messaging.simp.SimpMessagingTemplate;
 import org.springframework.test.web.servlet.MockMvc;
+import x.loggy.Alerter;
 import x.loggy.configuration.LoggingConfiguration;
 import x.loggy.configuration.WebSocketConfiguration;
 
@@ -42,6 +43,6 @@ class WebSocketControllerTest {
 
         verify(message).convertAndSend(
                 "/websocket/new-message/" + newMessage.getTopic(),
-                newMessage.getMessage());
+                newMessage);
     }
 }
