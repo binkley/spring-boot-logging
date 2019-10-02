@@ -11,7 +11,7 @@ import javax.validation.constraints.NotNull;
 @Builder(builderClassName = "Builder")
 @JsonDeserialize(builder = NewWebSocketMessage.Builder.class)
 public class NewWebSocketMessage {
-    private final @NotNull String topic;
+    private final @NotNull String subject;
     private final @NotNull String message;
 
     @JsonPOJOBuilder(withPrefix = "")

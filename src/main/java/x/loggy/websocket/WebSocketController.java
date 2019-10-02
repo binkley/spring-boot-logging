@@ -28,7 +28,7 @@ public class WebSocketController {
     public void newMessage(
             @RequestBody final @Valid NewWebSocketMessage newMessage) {
         messaging.convertAndSend(
-                format("/websocket/new-message/%s", newMessage.getTopic()),
+                format("/websocket/new-message/%s", newMessage.getSubject()),
                 newMessage);
     }
 }

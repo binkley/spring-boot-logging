@@ -26,13 +26,12 @@ import static x.loggy.TestFixtures.newWebSocketMessage;
 import static x.loggy.websocket.WebSocketTester.webSocketTester;
 
 @RequiredArgsConstructor(onConstructor = @__(@Autowired))
-@SpringBootTest(webEnvironment = RANDOM_PORT, properties = {
-        "loggy.enable-demo=false"
-})
+@SpringBootTest(webEnvironment = RANDOM_PORT,
+        properties = "loggy.enable-demo=false")
 class WebSocketLiveTest {
     private static final NewWebSocketMessage webSocketUpdate
             = newWebSocketMessage();
-    private static final String topic = webSocketUpdate.getTopic();
+    private static final String subject = webSocketUpdate.getSubject();
 
     private final MessageConverter messageConverter;
     private final ObjectMapper objectMapper;
@@ -41,10 +40,10 @@ class WebSocketLiveTest {
     private int port;
 
     @Test
-    void shouldDeliverUpdateToWebSocketWhenControllerRecievesUpdate()
+    void shouldDeliverUpdateToWebSocketWhenControllerReceivesUpdate()
             throws InterruptedException, ExecutionException {
         final var tester = webSocketTester(webSocketUpdate,
-                format("/websocket/new-message/%s", topic),
+                format("/websocket/new-message/%s", subject),
                 this::postWebSocketUpdate, port, messageConverter);
 
         tester.assertDeliveryOfUpdate();

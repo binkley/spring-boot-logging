@@ -7,7 +7,7 @@ public class TestFixtures {
     public static NewWebSocketMessage newWebSocketMessage() {
         return NewWebSocketMessage.builder()
                 .message("I saw one yesterday!")
-                .topic("unicorns")
+                .subject("unicorns")
                 .build();
     }
 }

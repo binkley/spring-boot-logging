@@ -13,6 +13,7 @@ import x.loggy.Alerter;
 import x.loggy.configuration.LoggingConfiguration;
 import x.loggy.configuration.WebSocketConfiguration;
 
+import static java.lang.String.format;
 import static org.mockito.Mockito.verify;
 import static org.springframework.http.MediaType.APPLICATION_JSON_UTF8_VALUE;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.post;
@@ -42,7 +43,7 @@ class WebSocketControllerTest {
                 .andExpect(status().isAccepted());
 
         verify(message).convertAndSend(
-                "/websocket/new-message/" + newMessage.getTopic(),
+                format("/websocket/new-message/%s", newMessage.getSubject()),
                 newMessage);
     }
 }
