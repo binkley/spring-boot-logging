@@ -9,9 +9,9 @@ feign:
 info:
   app:
     # These are Maven-specific
-    encoding: '@project.build.sourceEncoding@'
-    java.source: '@java.version@'
-    java.target: '@java.version@'
+    encoding: "@project.build.sourceEncoding@"
+    java.source: "@java.version@"
+    java.target: "@java.version@"
 
 logbook:
   exclude:
@@ -36,7 +36,7 @@ loggy:
   enable-demo: true
   log-feign-retries: true
   run-once: true
-  # simulate-slow-responses: '1s'
+  # simulate-slow-responses: "1s"
 
 management:
   endpoints:
@@ -71,7 +71,7 @@ spring:
   application:
     name: loggy
   datasource:
-    url: 'jdbc:h2:mem:testdb'
+    url: "jdbc:h2:mem:testdb"
     username: postgres
   jackson:
     # TODO: Millis showing up anyways

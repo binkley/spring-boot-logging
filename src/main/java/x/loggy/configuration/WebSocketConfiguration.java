@@ -47,5 +47,6 @@ public class WebSocketConfiguration
     @Override
     public void configureMessageBroker(final MessageBrokerRegistry registry) {
         registry.enableSimpleBroker("/websocket");
+        registry.setApplicationDestinationPrefixes("/app");
     }
 }

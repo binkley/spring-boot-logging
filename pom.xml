@@ -38,7 +38,7 @@ swaggerVersion=2.9.2
         <lombok.version>1.18.10</lombok.version>
         <maven-compiler-plugin.version>3.8.1</maven-compiler-plugin.version>
         <!-- TODO: Track when 3.1.2 releases -->
-        <maven-dependency-plugin.version>3.1.2-SNAPSHOT</maven-dependency-plugin.version>
+        <maven-dependency-plugin.version>3.1.1</maven-dependency-plugin.version>
         <maven-enforcer-plugin.version>1.4.1</maven-enforcer-plugin.version>
         <maven-surefire-plugin.version>2.22.2</maven-surefire-plugin.version>
         <micrometer.version>1.2.1</micrometer.version>
