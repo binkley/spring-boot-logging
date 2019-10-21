@@ -163,7 +163,8 @@ class LoggyLiveTest {
                 .getLocation()
                 .toExternalForm();
 
-        assertThat(jarUrl).contains("2.1.8.RELEASE");
+        // TODO: Read from $PROJECT/gradle.properties
+        assertThat(jarUrl).contains("2.1.9.RELEASE");
     }
 
     @Test
