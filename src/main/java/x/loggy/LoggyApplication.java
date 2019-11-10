@@ -4,10 +4,14 @@ import joptsimple.OptionParser;
 import lombok.RequiredArgsConstructor;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
+import org.springframework.boot.context.event.ApplicationReadyEvent;
 import org.springframework.cloud.openfeign.EnableFeignClients;
+import org.springframework.context.ApplicationListener;
+import org.springframework.stereotype.Component;
 
 import java.io.IOException;
 
+import static java.lang.String.format;
 import static java.lang.System.exit;
 import static java.lang.System.out;
 import static org.springframework.boot.SpringApplication.run;
@@ -64,5 +68,18 @@ public class LoggyApplication {
         if (options.has(simulateSlowResponses))
             System.setProperty("loggy.simulate-slow-responses",
                     options.valueOf(simulateSlowResponses));
+    }
+
+    @Component
+    public static class LoggyReadyListener
+            implements ApplicationListener<ApplicationReadyEvent> {
+        @Override
+        public void onApplicationEvent(final ApplicationReadyEvent event) {
+            final var port = event
+                    .getApplicationContext()
+                    .getEnvironment()
+                    .getProperty("local.server.port", Integer.class);
+            out.println(format("Welcome!  Try http://localhost:%d.", port));
+        }
     }
 }
