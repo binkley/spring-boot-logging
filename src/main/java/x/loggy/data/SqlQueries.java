@@ -12,11 +12,11 @@ import org.springframework.stereotype.Component;
 import java.util.AbstractList;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Locale;
 import java.util.Map;
 import java.util.regex.Pattern;
 
 import static ch.qos.logback.classic.Level.DEBUG;
-import static java.util.Locale.US;
 import static java.util.function.Function.identity;
 import static java.util.regex.Pattern.compile;
 import static java.util.stream.Collectors.toMap;
@@ -26,8 +26,14 @@ import static org.slf4j.LoggerFactory.getLogger;
 @Component
 public class SqlQueries
         extends AbstractList<String> {
+    private static final List<String> queryTypes = List.of(
+            "SELECT", "INSERT", "UPDATE", "UPSERT", "OTHER", "INVALID");
+
     private static final Pattern queryOnly = compile(
             "^Executing prepared SQL statement \\[(.*)]$");
+    private static final Pattern upsert = compile(
+            "^SELECT \\* FROM upsert_.*$");
+
     private final List<String> queries = new ArrayList<>();
     @SuppressWarnings("unused")
     private final Appender appender = new Appender();
@@ -37,17 +43,20 @@ public class SqlQueries
 
     public SqlQueries(final MeterRegistry registry) {
         // Pre-build these, so we publish even with 0 events
-        counters = List.of("SELECT", "INSERT", "UPDATE", "OTHER", "INVALID")
-                .stream()
+        counters = queryTypes.stream()
                 .collect(toMap(identity(), type -> registry.counter(
                         "database.calls", "sql", type.toLowerCase())));
     }
 
     private static String bucket(final String query) {
         try {
-            return parse(query).getClass().getSimpleName()
+            final var bucket = parse(query).getClass()
+                    .getSimpleName()
                     .replace("Statement", "")
-                    .toUpperCase(US);
+                    .toUpperCase(Locale.US);
+            final var matcher = upsert.matcher(query);
+            if (matcher.find()) return "UPSERT";
+            return bucket; // TODO: What is ASCII upcase?
         } catch (final JSQLParserException e) {
             return "INVALID";
         }
@@ -70,6 +79,8 @@ public class SqlQueries
 
     private class Appender
             extends AppenderBase<ILoggingEvent> {
+        @SuppressWarnings({"ThisEscapedInObjectConstruction",
+                "OverridableMethodCallDuringObjectConstruction"})
         private Appender() {
             final var logger = (Logger) getLogger(
                     JdbcTemplate.class.getName());
