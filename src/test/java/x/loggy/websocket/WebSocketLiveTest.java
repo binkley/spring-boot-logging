@@ -21,7 +21,7 @@ import static java.net.http.HttpResponse.BodyHandlers.discarding;
 import static java.nio.charset.StandardCharsets.UTF_8;
 import static org.springframework.boot.test.context.SpringBootTest.WebEnvironment.RANDOM_PORT;
 import static org.springframework.http.HttpHeaders.CONTENT_TYPE;
-import static org.springframework.http.MediaType.APPLICATION_JSON_UTF8_VALUE;
+import static org.springframework.http.MediaType.APPLICATION_JSON_VALUE;
 import static x.loggy.TestFixtures.newWebSocketMessage;
 import static x.loggy.websocket.WebSocketTester.webSocketTester;
 
@@ -58,7 +58,7 @@ class WebSocketLiveTest {
                 .uri(URI.create(format(
                         "http://localhost:%d/message/new-message",
                         port)))
-                .header(CONTENT_TYPE, APPLICATION_JSON_UTF8_VALUE)
+                .header(CONTENT_TYPE, APPLICATION_JSON_VALUE)
                 .build();
 
         newHttpClient().send(newMessageFromWebSocket, discarding());
