@@ -69,6 +69,11 @@ $ ./docker-compose up
 $ open http://localhost:9090
 ```
 
+## Drawbacks
+
+As things stand now, the code couples too tightly to Spring Boot 2.1.x.
+Updating to 2.2.x breaks things.
+
 ## Notes
 
 * [ELK on Docker Compose](https://github.com/deviantony/docker-elk)
